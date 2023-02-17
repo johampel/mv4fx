@@ -183,18 +183,6 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
   }
 
   @Override
-  protected double computeMaxWidth(double height, double topInset, double rightInset,
-      double bottomInset, double leftInset) {
-    return computeWidth(height, topInset, rightInset, bottomInset, leftInset, SizeType.MAX);
-  }
-
-  @Override
-  protected double computeMaxHeight(double width, double topInset, double rightInset,
-      double bottomInset, double leftInset) {
-    return computeHeight(width, topInset, rightInset, bottomInset, leftInset, SizeType.MAX);
-  }
-
-  @Override
   protected double computePrefWidth(double height, double topInset, double rightInset,
       double bottomInset, double leftInset) {
     return computeWidth(height, topInset, rightInset, bottomInset, leftInset, SizeType.PREF);
@@ -608,16 +596,6 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
     }
 
     @Override
-    protected double computeMaxWidth(double height) {
-      return computeWidth(height, SizeType.MAX);
-    }
-
-    @Override
-    protected double computeMaxHeight(double width) {
-      return computeHeight(width, SizeType.MAX);
-    }
-
-    @Override
     protected double computePrefWidth(double height) {
       return computeWidth(height, SizeType.PREF);
     }
@@ -696,8 +674,9 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
   /**
    * Container for the header area.
    * <p>
-   * It contains the {@link TabContainer} and - if  present - the {@link ViewGroup#getLeftTopHeaderArea() ViewGroup.leftTopHeaderArea} and
-   * the {@link ViewGroup#getRightBottomHeaderArea()} ViewGroup.rightBottomArea}.
+   * It contains the {@link TabContainer} and - if  present - the
+   * {@link ViewGroup#getLeftTopHeaderArea() ViewGroup.leftTopHeaderArea} and the
+   * {@link ViewGroup#getRightBottomHeaderArea()} ViewGroup.rightBottomArea}.
    */
   protected class HeaderContainer extends StackPane {
 
@@ -838,16 +817,6 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
     }
 
     @Override
-    protected double computeMaxWidth(double height) {
-      return computeWidth(height, SizeType.MAX);
-    }
-
-    @Override
-    protected double computeMaxHeight(double width) {
-      return computeHeight(width, SizeType.MAX);
-    }
-
-    @Override
     protected double computePrefWidth(double height) {
       return computeWidth(height, SizeType.PREF);
     }
@@ -905,8 +874,9 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
   /**
    * Container for the tab controls of the {@link View Views}.
    * <p>
-   * This is a child of the {@link HeaderContainer} and hosts all the tab controls for the different views. If there are too many tabs so
-   * that they don't fit in the visible area, a {@link ViewSelector} is shown.
+   * This is a child of the {@link HeaderContainer} and hosts all the tab controls for the different
+   * views. If there are too many tabs so that they don't fit in the visible area, a
+   * {@link ViewSelector} is shown.
    */
   protected class TabContainer extends StackPane {
 
@@ -985,7 +955,8 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
     /**
      * Called when a view is selected.
      * <p>
-     * Applies the {@code selected} pseudo class to the {@link TabControl} of the selected {@link View}.
+     * Applies the {@code selected} pseudo class to the {@link TabControl} of the selected
+     * {@link View}.
      *
      * @param view The new selected {@code View}
      */
@@ -999,8 +970,8 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
     /**
      * Finds the {@link DropTarget} for the given position.
      * <p>
-     * In case that {@code pos} is out of bounds, {@code empty} is returned. Otherwise the exact behaviour depends on the source of the drag
-     * and drop operation and the position:
+     * In case that {@code pos} is out of bounds, {@code empty} is returned. Otherwise the exact
+     * behaviour depends on the source of the drag and drop operation and the position:
      *
      * <ul>
      *   <li>If the source is this {@code ViewGroup}, a {@linkplain DropTarget#none() undroppable}
@@ -1103,16 +1074,6 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
     @Override
     protected double computeMinHeight(double width) {
       return computeHeight(width, SizeType.MIN);
-    }
-
-    @Override
-    protected double computeMaxWidth(double height) {
-      return computeWidth(height, SizeType.MAX);
-    }
-
-    @Override
-    protected double computeMaxHeight(double width) {
-      return computeHeight(width, SizeType.MAX);
     }
 
     @Override
@@ -1318,9 +1279,11 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
   /**
    * Panel containing controls to select a {@link View}.
    * <p>
-   * The selector is visible, in case that not all {@link TabControl TabControls} fit into the {@link TabContainer}.
+   * The selector is visible, in case that not all {@link TabControl TabControls} fit into the
+   * {@link TabContainer}.
    * <p>
-   * Which controls are present, depends on the {@link ViewGroup#viewSelectorControlsProperty() ViewGroup.viewSelectorControls} setting.
+   * Which controls are present, depends on the
+   * {@link ViewGroup#viewSelectorControlsProperty() ViewGroup.viewSelectorControls} setting.
    */
   protected class ViewSelector extends HBox {
 
@@ -1426,7 +1389,8 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
     /**
      * Called when the available controls are changed.
      * <p>
-     * Depending on {@link ViewGroup#getViewSelectorControls() ViewGroup.viewGroupSelectorControls} controls are made available or not.
+     * Depending on {@link ViewGroup#getViewSelectorControls() ViewGroup.viewGroupSelectorControls}
+     * controls are made available or not.
      */
     protected void onControlsChanged() {
       ViewSelectorControls setting = getSkinnable().getViewSelectorControls();
@@ -1479,9 +1443,11 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
      */
     protected void onSelectionChanged() {
       int index = getSkinnable().getSelection().getSelectedIndex();
-      getControlByStyle(isReverseHeaderLayout() ? CLASS_VIEW_GROUP_SELECTOR_NEXT : CLASS_VIEW_GROUP_SELECTOR_PREV).ifPresent(
+      getControlByStyle(isReverseHeaderLayout() ? CLASS_VIEW_GROUP_SELECTOR_NEXT
+          : CLASS_VIEW_GROUP_SELECTOR_PREV).ifPresent(
           n -> n.setDisable(index <= 0));
-      getControlByStyle(isReverseHeaderLayout() ? CLASS_VIEW_GROUP_SELECTOR_PREV : CLASS_VIEW_GROUP_SELECTOR_NEXT).ifPresent(
+      getControlByStyle(isReverseHeaderLayout() ? CLASS_VIEW_GROUP_SELECTOR_PREV
+          : CLASS_VIEW_GROUP_SELECTOR_NEXT).ifPresent(
           n -> n.setDisable(index == -1 || index + 1 >= getSkinnable().getViews().size()));
     }
 
@@ -1496,8 +1462,8 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
     /**
      * Creates a new control.
      * <p>
-     * This is basically a {@link StackPane} hosting a {@link Label}. The pane has the predefined style {@code view-selector-control} and
-     * the label the {@code control-decoration} style.
+     * This is basically a {@link StackPane} hosting a {@link Label}. The pane has the predefined
+     * style {@code view-selector-control} and the label the {@code control-decoration} style.
      *
      * @param style   The additional style of the label,
      * @param handler The event hanler.
@@ -1517,8 +1483,9 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
   /**
    * Component representing a tab for a {@link View}.
    * <p>
-   * There is one instance of this class per {@code View} in a {@link ViewGroup}. It basically contains a node representing the view (e.g. a
-   * {@link Label}) and optionally one or more buttons for certain operations.
+   * There is one instance of this class per {@code View} in a {@link ViewGroup}. It basically
+   * contains a node representing the view (e.g. a {@link Label}) and optionally one or more buttons
+   * for certain operations.
    */
   protected class TabControl extends Pane {
 
@@ -1684,8 +1651,9 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
     /**
      * Called when the visibility of the action buttons has been changed.
      * <p>
-     * Note that this creates the buttons for the close and maximize action, if they are not generally disabled. It depends on the current
-     * state of the view and the mouse pointer position, whether they are actually visible.
+     * Note that this creates the buttons for the close and maximize action, if they are not
+     * generally disabled. It depends on the current state of the view and the mouse pointer
+     * position, whether they are actually visible.
      */
     protected void onTabActionVisibilityChanged() {
       if (view.getTabCloseActionVisibility() == null
@@ -1708,8 +1676,9 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
     /**
      * Updates the children of this component.
      * <p>
-     * It adds for sure the control (which is either a {@link Label} or the result of the {@link View#getTabNode() View.tabNodeCallback} and
-     * depending one the current state the action buttons
+     * It adds for sure the control (which is either a {@link Label} or the result of the
+     * {@link View#getTabNode() View.tabNodeCallback} and depending one the current state the action
+     * buttons
      */
     protected void updateChildren() {
       List<Node> children = getChildren();
@@ -1845,16 +1814,6 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
     @Override
     protected double computeMinHeight(double width) {
       return computeHeight(width, SizeType.MIN);
-    }
-
-    @Override
-    protected double computeMaxWidth(double height) {
-      return computeWidth(height, SizeType.MAX);
-    }
-
-    @Override
-    protected double computeMaxHeight(double width) {
-      return computeHeight(width, SizeType.MAX);
     }
 
     private double computeWidth(double height, SizeType type) {

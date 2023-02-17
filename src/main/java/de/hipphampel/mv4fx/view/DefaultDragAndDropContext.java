@@ -116,7 +116,9 @@ public class DefaultDragAndDropContext implements DragAndDropContext {
     if (target != null && source != null) {
       ViewGroupContainer root = Utils.getRootViewGroupContainer(source.asControl()).orElse(null);
       target.drop(this, source);
-      Utils.normalizeOrCloseViewGroupContainer(root);
+      if (!target.equals(DropTarget.none())) {
+        Utils.normalizeOrCloseViewGroupContainer(root);
+      }
     }
   }
 

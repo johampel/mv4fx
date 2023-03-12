@@ -91,7 +91,6 @@ public class DemoApp {
 
     private CheckBox groupLeftTopAreaCheckBox;
     private CheckBox groupRightBottomAreaCheckBox;
-    private CheckBox groupAutoCloseCheckBox;
     private CheckBox groupChangeGroupCheckBox;
     private CheckBox groupNewWindowCheckBox;
     private final BooleanProperty confirmClose;
@@ -245,66 +244,62 @@ public class DemoApp {
       });
       content.add(groupRightBottomAreaCheckBox, 0, 8, 2, 1);
 
-      groupAutoCloseCheckBox = new CheckBox("Auto close ViewGroup");
-      groupAutoCloseCheckBox.setTooltip(new Tooltip("Automatically close ViewGroup, if last view is closed"));
-      content.add(groupAutoCloseCheckBox, 0, 9, 2, 1);
-
       groupChangeGroupCheckBox = new CheckBox("Drag to another ViewGroup allowed");
       groupChangeGroupCheckBox.setTooltip(new Tooltip("If checked, all Views of this can be move to a different ViewGroup via drag&drop"));
       groupChangeGroupCheckBox.selectedProperty().addListener((i, ov, nv) ->
           getViewGroup().setDropTargetTypes(addOrRemove(getViewGroup().getDropTargetTypes(), DropTargetType.CHANGE_GROUP, nv)));
-      content.add(groupChangeGroupCheckBox, 0, 10, 2, 1);
+      content.add(groupChangeGroupCheckBox, 0, 9, 2, 1);
 
       groupNewWindowCheckBox = new CheckBox("Drag to create new Window allowed");
       groupNewWindowCheckBox.setTooltip(
           new Tooltip("If checked, all Views of this can be moved outside a window to create a new one via drag&drop"));
       groupNewWindowCheckBox.selectedProperty().addListener((i, ov, nv) ->
           getViewGroup().setDropTargetTypes(addOrRemove(getViewGroup().getDropTargetTypes(), DropTargetType.NEW_WINDOW, nv)));
-      content.add(groupNewWindowCheckBox, 0, 11, 2, 1);
+      content.add(groupNewWindowCheckBox, 0, 10, 2, 1);
 
       groupDropSideSplitTopCheckBox = new CheckBox("Drop to top half possible");
       groupDropSideSplitTopCheckBox.setTooltip(
           new Tooltip("If checked, objects can be drop in the top area to split this view"));
       groupDropSideSplitTopCheckBox.selectedProperty()
           .addListener((i, ov, nv) -> getViewGroup().setDropSplitSides(addOrRemove(getViewGroup().getDropSplitSides(), Side.TOP, nv)));
-      content.add(groupDropSideSplitTopCheckBox, 0, 12, 2, 1);
+      content.add(groupDropSideSplitTopCheckBox, 0, 11, 2, 1);
 
       groupDropSideSplitRightCheckBox = new CheckBox("Drop to right half possible");
       groupDropSideSplitRightCheckBox.setTooltip(
           new Tooltip("If checked, objects can be drop in the right area to split this view"));
       groupDropSideSplitRightCheckBox.selectedProperty()
           .addListener((i, ov, nv) -> getViewGroup().setDropSplitSides(addOrRemove(getViewGroup().getDropSplitSides(), Side.RIGHT, nv)));
-      content.add(groupDropSideSplitRightCheckBox, 0, 13, 2, 1);
+      content.add(groupDropSideSplitRightCheckBox, 0, 12, 2, 1);
 
       groupDropSideSplitBottomCheckBox = new CheckBox("Drop to bottom half possible");
       groupDropSideSplitBottomCheckBox.setTooltip(
           new Tooltip("If checked, objects can be drop in the bottom area to split this view"));
       groupDropSideSplitBottomCheckBox.selectedProperty()
           .addListener((i, ov, nv) -> getViewGroup().setDropSplitSides(addOrRemove(getViewGroup().getDropSplitSides(), Side.BOTTOM, nv)));
-      content.add(groupDropSideSplitBottomCheckBox, 0, 14, 2, 1);
+      content.add(groupDropSideSplitBottomCheckBox, 0, 13, 2, 1);
 
       groupDropSideSplitLeftCheckBox = new CheckBox("Drop to left half possible");
       groupDropSideSplitLeftCheckBox.setTooltip(
           new Tooltip("If checked, objects can be drop in the left area to split this view"));
       groupDropSideSplitLeftCheckBox.selectedProperty()
           .addListener((i, ov, nv) -> getViewGroup().setDropSplitSides(addOrRemove(getViewGroup().getDropSplitSides(), Side.LEFT, nv)));
-      content.add(groupDropSideSplitLeftCheckBox, 0, 15, 2, 1);
+      content.add(groupDropSideSplitLeftCheckBox, 0, 14, 2, 1);
 
       Label groupDragTagsLabel = new Label("Drag tags:");
-      content.add(groupDragTagsLabel, 0, 16);
+      content.add(groupDragTagsLabel, 0, 15);
       groupDragTagsTextField = new TextField();
       groupDragTagsTextField.textProperty()
           .addListener(
               (i, ov, nv) -> getViewGroup().setDragTags(Arrays.stream(nv.split(",")).map(String::trim).collect(Collectors.toSet())));
-      content.add(groupDragTagsTextField, 1, 16);
+      content.add(groupDragTagsTextField, 1, 15);
 
       Label groupDropTagsLabel = new Label("Drop tags:");
-      content.add(groupDropTagsLabel, 0, 17);
+      content.add(groupDropTagsLabel, 0, 16);
       groupDropTagsTextField = new TextField();
       groupDropTagsTextField.textProperty()
           .addListener(
               (i, ov, nv) -> getViewGroup().setDropTags(Arrays.stream(nv.split(",")).map(String::trim).collect(Collectors.toSet())));
-      content.add(groupDropTagsTextField, 1, 17);
+      content.add(groupDropTagsTextField, 1, 16);
 
       // View settings
 
@@ -426,7 +421,6 @@ public class DemoApp {
         oldGroup.viewSelectorControlsProperty().unbindBidirectional(groupViewSelectorControlsComboBox.valueProperty());
         oldGroup.leftTopHeaderAreaProperty().removeListener(groupLeftAreaChangeListener);
         oldGroup.rightBottomHeaderAreaProperty().removeListener(groupRightAreaChangeListener);
-        oldGroup.autoCloseProperty().unbindBidirectional(groupAutoCloseCheckBox.selectedProperty());
         oldGroup.dropTargetTypesProperty().removeListener(groupDropTargetTypesChangeListener);
         oldGroup.dropSplitSidesProperty().removeListener(groupDropSplitSidesChangeListener);
         oldGroup.dragTagsProperty().removeListener(groupDragTagsListener);
@@ -445,8 +439,6 @@ public class DemoApp {
         newGroup.leftTopHeaderAreaProperty().addListener(groupLeftAreaChangeListener);
         groupRightBottomAreaCheckBox.setSelected(newGroup.getRightBottomHeaderArea() != null);
         newGroup.rightBottomHeaderAreaProperty().addListener(groupRightAreaChangeListener);
-        groupAutoCloseCheckBox.setSelected(newGroup.isAutoClose());
-        newGroup.autoCloseProperty().bindBidirectional(groupAutoCloseCheckBox.selectedProperty());
         groupChangeGroupCheckBox.setSelected(newGroup.getDropTargetTypes().contains(DropTargetType.CHANGE_GROUP));
         groupNewWindowCheckBox.setSelected(newGroup.getDropTargetTypes().contains(DropTargetType.NEW_WINDOW));
         newGroup.dropTargetTypesProperty().addListener(groupDropTargetTypesChangeListener);

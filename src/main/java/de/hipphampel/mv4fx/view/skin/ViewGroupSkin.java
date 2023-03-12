@@ -1374,8 +1374,11 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
       for (View view : getSkinnable().getViews()) {
         RadioMenuItem item = new RadioMenuItem();
         item.setId("view" + (id++));
-        item.setText(view.getTabLabel());
-        item.setGraphic(view.getTabGraphic());
+        if (view.getTabNode() != null) {
+          item.setGraphic(view.getTabNode().call(Side.TOP));
+        } else {
+          item.setText(view.getTabLabel());
+        }
         item.setStyle(view.getTabStyle());
         item.setToggleGroup(group);
         item.setSelected(view == getSkinnable().getSelection().getSelectedItem());

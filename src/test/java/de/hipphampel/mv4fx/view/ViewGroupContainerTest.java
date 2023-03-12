@@ -303,9 +303,12 @@ public class ViewGroupContainerTest {
   public void normalize_closeViewGroupWithAutoClose(FxRobot robot) {
     // Arrange
     ViewGroup left = new ViewGroup();
-    left.setAutoClose(true);
-    ViewGroup right = new ViewGroup();
-    right.setAutoClose(false);
+    ViewGroup right = new ViewGroup() {
+      @Override
+      public boolean isAutoClose() {
+        return false;
+      }
+    };
     populateContainer(robot, left, right);
 
     // Act
@@ -319,10 +322,19 @@ public class ViewGroupContainerTest {
   @Test
   public void normalize_collapsesSuperfluousContainers(FxRobot robot) {
     // Arrange
-    ViewGroup left = new ViewGroup();
-    left.setAutoClose(false);
-    ViewGroup right = new ViewGroup();
-    right.setAutoClose(false);
+    ViewGroup left = new ViewGroup() {
+      @Override
+      public boolean isAutoClose() {
+        return false;
+      }
+    };
+    ViewGroup right = new ViewGroup() {
+      @Override
+      public boolean isAutoClose() {
+        return false;
+      }
+    };
+
     ViewGroupContainer superfluous = new ViewGroupContainer();
 
     populateContainer(robot, superfluous, left, right);

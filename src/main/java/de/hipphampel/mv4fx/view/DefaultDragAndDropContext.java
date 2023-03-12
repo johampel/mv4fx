@@ -41,12 +41,14 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Window;
+import javafx.util.Pair;
 
 /**
  * Default implementation of the {@link DragAndDropContext}.
- *
- * This default implementation can also be used to customize the standard behaviour by deriving from this class and later on set the
- * new implementation via {@link DragAndDropContext#setInstance(DragAndDropContext) setInstance}.
+ * <p>
+ * This default implementation can also be used to customize the standard behaviour by deriving from
+ * this class and later on set the new implementation via
+ * {@link DragAndDropContext#setInstance(DragAndDropContext) setInstance}.
  *
  * @see DragAndDropContext
  */
@@ -208,31 +210,36 @@ public class DefaultDragAndDropContext implements DragAndDropContext {
       return Optional.empty();
     }
 
-    if (!node.isVisible() || node.isDisabled() || !node.getBoundsInLocal().contains(nodePos)) {
-      return Optional.of(DropTarget.none());
-    }
+    return getLeafNodeAtPosition(node, nodePos)
+        .flatMap(pair -> getViewGroupOfNode(pair.getKey(), pair.getValue()))
+        .map(pair -> pair.getKey().findDropTarget(this, pair.getValue()))
+        .orElseGet(() -> Optional.of(DropTarget.none()));
+  }
 
-    if (node instanceof ViewGroup group) {
-      return group.findDropTarget(this, nodePos);
+  private Optional<Pair<ViewGroup, Point2D>> getViewGroupOfNode(Node node, Point2D nodePos) {
+    if (node instanceof ViewGroup vg) {
+      return Optional.of(new Pair<>(vg, nodePos));
+    }
+    if (node.getParent() != null) {
+      return getViewGroupOfNode(node.getParent(), node.localToParent(nodePos));
+    }
+    return Optional.empty();
+  }
+
+  private Optional<Pair<Node, Point2D>> getLeafNodeAtPosition(Node node, Point2D nodePos) {
+    if (!node.getBoundsInLocal().contains(nodePos) || !node.isVisible() || node.isDisabled()) {
+      return Optional.empty();
     }
 
     if (node instanceof Parent parent) {
-      return findDropTargetInParent(parent, nodePos);
+      return parent.getChildrenUnmodifiable().stream()
+          .map(child -> getLeafNodeAtPosition(child, child.parentToLocal(nodePos)))
+          .filter(Optional::isPresent)
+          .map(Optional::get)
+          .findFirst()
+          .or(() -> Optional.of(new Pair<>(node, nodePos)));
     }
-
-    return Optional.of(DropTarget.none());
-  }
-
-  private Optional<DropTarget> findDropTargetInParent(Parent parent, Point2D parentPos) {
-    for (Node node : parent.getChildrenUnmodifiable()) {
-      Point2D nodePos = node.parentToLocal(parentPos);
-      Optional<DropTarget> target = findDropTargetInNode(node, nodePos);
-      if (target.isPresent()) {
-        return target;
-      }
-    }
-
-    return Optional.empty();
+    return Optional.of(new Pair<>(node, nodePos));
   }
 
 }

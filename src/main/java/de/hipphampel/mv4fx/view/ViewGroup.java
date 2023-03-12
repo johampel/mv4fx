@@ -46,10 +46,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.css.CssMetaData;
-import javafx.css.SimpleStyleableBooleanProperty;
 import javafx.css.SimpleStyleableObjectProperty;
 import javafx.css.Styleable;
-import javafx.css.StyleableBooleanProperty;
 import javafx.css.StyleablePropertyFactory;
 import javafx.geometry.Point2D;
 import javafx.geometry.Side;
@@ -63,9 +61,11 @@ import javafx.util.Callback;
 /**
  * Control that hosts {@link View Views}.
  * <p>
- * A {@code ViewGroup} is best compared with a {@code TabPane} known from the standard Java FX controls. It allows to contain any number of
- * of {@code Views}, whereas one of it is the active one and its content is displayed in the group content area. Beside the content area the
- * {@code ViewGroup} has a tab area, which shows for each view a "tab". Clicking the tab make the corresponding view to the active one.
+ * A {@code ViewGroup} is best compared with a {@code TabPane} known from the standard Java FX
+ * controls. It allows to contain any number of of {@code Views}, whereas one of it is the active
+ * one and its content is displayed in the group content area. Beside the content area the
+ * {@code ViewGroup} has a tab area, which shows for each view a "tab". Clicking the tab make the
+ * corresponding view to the active one.
  * <p>
  * The {@code ViewGroup} provides several CSS styles to customize the behaviour and appearance:
  * <ul>
@@ -107,8 +107,9 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * Enumeration describing the controls to use for selecting a {@link View}.
    * <p>
-   * In case that too many {@code Views} are present, not all of their tabs   fit in the header, so an overflow occurs. This enum describes
-   * which controls are present to select a view that has no visible tab
+   * In case that too many {@code Views} are present, not all of their tabs   fit in the header, so
+   * an overflow occurs. This enum describes which controls are present to select a view that has no
+   * visible tab
    */
   public enum ViewSelectorControls {
     /* Indicates that two arrow buttons are shown to iterate through the tabs. */
@@ -137,7 +138,6 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   public static final String PROPERTY_DROP_SPLIT_SIDES = "dropSplitSides";
   public static final String PROPERTY_DRAGGING = "dragging";
   public static final String PROPERTY_DROP_TARGET = "dropTarget";
-  public static final String PROPERTY_AUTO_CLOSE = "autoClose";
 
   // Style definition stuff
   private static final StyleablePropertyFactory<ViewGroup> FACTORY = new StyleablePropertyFactory<>(
@@ -163,8 +163,6 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
       "-mv4fx-drop-split-sides", s -> s.dropSplitSides, Side.class,
       Set.of(Side.TOP, Side.RIGHT, Side.BOTTOM, Side.LEFT), true);
 
-  private static final CssMetaData<ViewGroup, Boolean> AUTO_CLOSE = FACTORY.createBooleanCssMetaData(
-      "-mv4fx-auto-close", s -> s.autoClose, true, true);
   private final static List<CssMetaData<? extends Styleable, ?>> CLASS_CSS_META_DATA;
 
   static {
@@ -177,7 +175,6 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
     own.add(DROP_TAGS);
     own.add(DROP_TARGET_TYPES);
     own.add(DROP_SPLIT_SIDES);
-    own.add(AUTO_CLOSE);
     CLASS_CSS_META_DATA = Collections.unmodifiableList(own);
   }
 
@@ -205,13 +202,13 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   private final SimpleStyleableObjectProperty<Set<Side>> dropSplitSides;
   private final BooleanProperty dragging;
   private final ObjectProperty<DropTarget> dropTarget;
-  private final StyleableBooleanProperty autoClose;
 
   /**
    * Constructor.
    */
   public ViewGroup() {
-    this.views = new SimpleListProperty<>(this, PROPERTY_VIEWS, FXCollections.observableList(new ArrayList<>()));
+    this.views = new SimpleListProperty<>(this, PROPERTY_VIEWS,
+        FXCollections.observableList(new ArrayList<>()));
     this.selection = new SingleSelectionModel<>() {
       @Override
       protected View getModelItem(int index) {
@@ -228,17 +225,21 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
     this.tabMaxWidth = new StyleableSizeProperty(this, PROPERTY_TAB_MAX_WIDTH, TAB_MAX_WIDTH);
     this.tabMinWidth = new StyleableSizeProperty(this, PROPERTY_TAB_MIN_WIDTH, TAB_MIN_WIDTH);
     this.side = new LayoutRequestingStyleableObjectProperty<>(this, PROPERTY_SIDE, SIDE);
-    this.viewSelectorControls = new LayoutRequestingStyleableObjectProperty<>(this, PROPERTY_VIEW_SELECTOR_CONTROLS,
+    this.viewSelectorControls = new LayoutRequestingStyleableObjectProperty<>(this,
+        PROPERTY_VIEW_SELECTOR_CONTROLS,
         VIEW_SELECTOR_CONTROLS);
-    this.dragTags = new SimpleStyleableObjectProperty<>(DRAG_TAGS, this, PROPERTY_DRAG_TAGS, Set.of());
-    this.dropTargetTypes = new SimpleStyleableObjectProperty<>(DROP_TARGET_TYPES, this, PROPERTY_DROP_TARGET_TYPES,
+    this.dragTags = new SimpleStyleableObjectProperty<>(DRAG_TAGS, this, PROPERTY_DRAG_TAGS,
+        Set.of());
+    this.dropTargetTypes = new SimpleStyleableObjectProperty<>(DROP_TARGET_TYPES, this,
+        PROPERTY_DROP_TARGET_TYPES,
         Set.of(DropTargetType.REORDER, DropTargetType.CHANGE_GROUP, DropTargetType.NEW_WINDOW));
-    this.dropTags = new SimpleStyleableObjectProperty<>(DROP_TAGS, this, PROPERTY_DROP_TAGS, Set.of());
-    this.dropSplitSides = new SimpleStyleableObjectProperty<>(DROP_SPLIT_SIDES, this, PROPERTY_DROP_SPLIT_SIDES,
+    this.dropTags = new SimpleStyleableObjectProperty<>(DROP_TAGS, this, PROPERTY_DROP_TAGS,
+        Set.of());
+    this.dropSplitSides = new SimpleStyleableObjectProperty<>(DROP_SPLIT_SIDES, this,
+        PROPERTY_DROP_SPLIT_SIDES,
         Set.of(Side.TOP, Side.RIGHT, Side.BOTTOM, Side.LEFT));
     this.dragging = new SimpleBooleanProperty(this, PROPERTY_DRAGGING, false);
     this.dropTarget = new SimpleObjectProperty<>(this, PROPERTY_DROP_TARGET);
-    this.autoClose = new SimpleStyleableBooleanProperty(AUTO_CLOSE, this, PROPERTY_AUTO_CLOSE, true);
     this.views.addListener(this::onViewsChanged);
 
     this.getStylesheets().add(Constants.CSS_URL);
@@ -251,39 +252,19 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   }
 
   /**
-   * Convenience getter for {@code autoClose} property.
+   * Specifies, whether auto close this group.
    * <p>
-   * See documentation of {@link #autoCloseProperty() autoClose} property for details.
+   * The return value decides, whether the group is automatically closed/disposed, when the last
+   * view of the group is removed, either because the view has closed or moved away.
+   * <p>
+   * By default, this method returns {@code true}, derived classes might implement more
+   * sophisticated logic
    *
-   * @return The property value
+   * @return The auto close flag
    */
   public boolean isAutoClose() {
-    return autoClose.get();
+    return true;
   }
-
-  /**
-   * The {@code autoClose} property.
-   * <p>
-   * This property is decides, whether the group is automatically closed/disposed, when the last view of the group is removed, either
-   * because the view has closed or moved away.
-   *
-   * @return The property.
-   */
-  public BooleanProperty autoCloseProperty() {
-    return autoClose;
-  }
-
-  /**
-   * Convenience setter for {@code autoClose} property.
-   * <p>
-   * See documentation of {@link #autoCloseProperty() autoClose} property for details.
-   *
-   * @param autoClose The property value
-   */
-  public void setAutoClose(boolean autoClose) {
-    this.autoClose.set(autoClose);
-  }
-
 
   /**
    * Gets the associated {@link SelectionModel}
@@ -319,7 +300,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * The {@code views} property.
    * <p>
-   * This property contains the list pf the {@link View Views} currently associated with this group.
+   * This property contains the list pf the {@link View Views} currently associated with this
+   * group.
    *
    * @return The property
    */
@@ -437,8 +419,9 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * Convenience getter for the {@code leftTopHeaderArea} property.
    * <p>
-   * See documentation of {@link #leftTopHeaderAreaProperty() leftTopHeaderArea} property for details. Depending on the value of the side,
-   * the content of the header area is rotated accordingly.
+   * See documentation of {@link #leftTopHeaderAreaProperty() leftTopHeaderArea} property for
+   * details. Depending on the value of the side, the content of the header area is rotated
+   * accordingly.
    *
    * @return The current value
    */
@@ -449,11 +432,13 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * The {@code leftTopHeaderArea} property.
    * <p>
-   * This property allows to specify a {@link Callback} that produces a {@code Node} that appears either om the left or on the top side of
-   * the header area (in case that the {@link #sideProperty() side} is horizontal, it appears at left, otherwise at top).
+   * This property allows to specify a {@link Callback} that produces a {@code Node} that appears
+   * either om the left or on the top side of the header area (in case that the
+   * {@link #sideProperty() side} is horizontal, it appears at left, otherwise at top).
    * <p>
-   * Although the node is rotated along with the header according to the {@code side}, the {@code Callback} is called each time the
-   * {@code side} is changed to allow different kind of nodes per side.
+   * Although the node is rotated along with the header according to the {@code side}, the
+   * {@code Callback} is called each time the {@code side} is changed to allow different kind of
+   * nodes per side.
    *
    * @return The  {@code Callback} or  {@code null}
    */
@@ -464,7 +449,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * Convenience setter for the {@code leftTopHeaderArea} property.
    * <p>
-   * See documentation of {@link #leftTopHeaderAreaProperty() leftTopHeaderArea} property for details.
+   * See documentation of {@link #leftTopHeaderAreaProperty() leftTopHeaderArea} property for
+   * details.
    *
    * @param leftTopHeaderArea The new value
    */
@@ -475,7 +461,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * Convenience getter for the {@code rightBottomHeaderArea} property.
    * <p>
-   * See documentation of {@link #rightBottomHeaderAreaProperty() rightBottomHeaderArea} property for details.
+   * See documentation of {@link #rightBottomHeaderAreaProperty() rightBottomHeaderArea} property
+   * for details.
    *
    * @return The current value
    */
@@ -486,11 +473,13 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * The {@code rightBottomHeaderArea} property.
    * <p>
-   * This property allows to specify a {@link Callback} that produces a {@code Node} that appears either om the right or on the bottom side
-   * of the header area (in case that the {@link #sideProperty() side} is horizontal, it appears at right, otherwise at bottom).
+   * This property allows to specify a {@link Callback} that produces a {@code Node} that appears
+   * either om the right or on the bottom side of the header area (in case that the
+   * {@link #sideProperty() side} is horizontal, it appears at right, otherwise at bottom).
    * <p>
-   * Although the node is rotated along with the header according to the {@code side}, the {@code Callback} is called each time the
-   * {@code side} is changed to allow different kind of nodes per side.
+   * Although the node is rotated along with the header according to the {@code side}, the
+   * {@code Callback} is called each time the {@code side} is changed to allow different kind of
+   * nodes per side.
    *
    * @return The  {@code Callback} or  {@code null}
    */
@@ -501,7 +490,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * Convenience setter for the {@code rightBottomHeaderArea} property.
    * <p>
-   * See documentation of {@link #rightBottomHeaderAreaProperty() rightBottomHeaderArea} property for details.
+   * See documentation of {@link #rightBottomHeaderAreaProperty() rightBottomHeaderArea} property
+   * for details.
    *
    * @param rightBottomHeaderArea The new value
    */
@@ -523,8 +513,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * {@code tabMaxWidth} property.
    * <p>
-   * This property controls the maximum width a tab may have. It is guaranteed that a tab never exceeds this limit, independent from its own
-   * settings.
+   * This property controls the maximum width a tab may have. It is guaranteed that a tab never
+   * exceeds this limit, independent from its own settings.
    * <p>
    * This property can be also set via the CSS style {@code -mvf4x-tab-max-width}
    *
@@ -559,8 +549,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * {@code tabMinWidth} property.
    * <p>
-   * This property controls the minimum width a tab may have. It is guaranteed that a tab never exceeds this limit, independent from its own
-   * settings.
+   * This property controls the minimum width a tab may have. It is guaranteed that a tab never
+   * exceeds this limit, independent from its own settings.
    * <p>
    * This property can be also set via the CSS style {@code -mvf4x-tab-min-width}
    *
@@ -584,7 +574,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * Convenience getter for the {@code viewSelectorControls} property.
    * <p>
-   * See documentation of {@link #viewSelectorControlsProperty() viewSelectorControls} property for details.
+   * See documentation of {@link #viewSelectorControlsProperty() viewSelectorControls} property for
+   * details.
    *
    * @return The current value
    */
@@ -595,8 +586,9 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * The {@code viewSelectorControls} property.
    * <p>
-   * This property defines, which controls are shown in case that the header of the group overflows, so that not all tabs can be made
-   * visible. The {@link ViewSelectorControls} provides the valid values.
+   * This property defines, which controls are shown in case that the header of the group overflows,
+   * so that not all tabs can be made visible. The {@link ViewSelectorControls} provides the valid
+   * values.
    * <p>
    * This property can be also set via the CSS style {@code -mvf4x-view-selector-controls}
    *
@@ -609,7 +601,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * Convenience setter for the {@code viewSelectorControls} property.
    * <p>
-   * See documentation of {@link #viewSelectorControlsProperty() viewSelectorControls} property for details.
+   * See documentation of {@link #viewSelectorControlsProperty() viewSelectorControls} property for
+   * details.
    *
    * @param viewSelectorControls The new value
    */
@@ -634,8 +627,9 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
    * <p>
    * This property contains the drag tags assigned to this instance.
    * <p>
-   * These tags are evaluated when attempting to drop this object into another one. This is only possible, if all the tags in this set can
-   * be found in the {@link ViewGroup#getDropTags() drop tags} of the target or this set is empty.
+   * These tags are evaluated when attempting to drop this object into another one. This is only
+   * possible, if all the tags in this set can be found in the
+   * {@link ViewGroup#getDropTags() drop tags} of the target or this set is empty.
    *
    * @return The property
    */
@@ -651,7 +645,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
    * @param dragTags New value
    */
   public void setDragTags(Set<String> dragTags) {
-    this.dragTags.setValue(Collections.unmodifiableSet(Objects.requireNonNullElseGet(dragTags, HashSet::new)));
+    this.dragTags.setValue(
+        Collections.unmodifiableSet(Objects.requireNonNullElseGet(dragTags, HashSet::new)));
   }
 
   /**
@@ -670,8 +665,9 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
    * <p>
    * This property contains the drop tags assigned to this instance.
    * <p>
-   * These tags are evaluated when attempting to drop an object into this one. This is only possible, if the tags in this set are a super
-   * set of the tags found in the {@link ViewOrGroup#getDragTags()} tags} of the source or this set is empty.
+   * These tags are evaluated when attempting to drop an object into this one. This is only
+   * possible, if the tags in this set are a super set of the tags found in the
+   * {@link ViewOrGroup#getDragTags()} tags} of the source or this set is empty.
    *
    * @return The property
    */
@@ -687,7 +683,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
    * @param dropTags New value
    */
   public void setDropTags(Set<String> dropTags) {
-    this.dropTags.setValue(Collections.unmodifiableSet(Objects.requireNonNullElseGet(dropTags, HashSet::new)));
+    this.dropTags.setValue(
+        Collections.unmodifiableSet(Objects.requireNonNullElseGet(dropTags, HashSet::new)));
   }
 
 
@@ -705,14 +702,16 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * The {@code dropDropSplitSides} property.
    * <p>
-   * This property controls, whether and how the container can be split when a drag and drop operation is done.
+   * This property controls, whether and how the container can be split when a drag and drop
+   * operation is done.
    * <p>
-   * When trying to drop an object into this container, the container is split vertically or horizontally, so that two areas exist, one for
-   * the already existing content and one area for the object being dropped. This property defines, on which sides the already existing
-   * content can be placed.
+   * When trying to drop an object into this container, the container is split vertically or
+   * horizontally, so that two areas exist, one for the already existing content and one area for
+   * the object being dropped. This property defines, on which sides the already existing content
+   * can be placed.
    * <p>
-   * By default, this property contains all possible sides, so that arbitrary splitting is possible; setting it top an empty list forbids
-   * splitting.
+   * By default, this property contains all possible sides, so that arbitrary splitting is possible;
+   * setting it top an empty list forbids splitting.
    *
    * @return The property.
    */
@@ -728,7 +727,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
    * @param value The new value
    */
   public void setDropSplitSides(Set<Side> value) {
-    this.dropSplitSides.set(Collections.unmodifiableSet(Objects.requireNonNullElseGet(value, HashSet::new)));
+    this.dropSplitSides.set(
+        Collections.unmodifiableSet(Objects.requireNonNullElseGet(value, HashSet::new)));
   }
 
   /**
@@ -746,8 +746,8 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   /**
    * The {@code dropTargetTypes} property.
    * <p>
-   * Depending on these types it is decided, whether a drag and drop operation is supported. See the enum
-   * {@link de.hipphampel.mv4fx.view.ViewOrGroup.DropTargetType} for details.
+   * Depending on these types it is decided, whether a drag and drop operation is supported. See the
+   * enum {@link de.hipphampel.mv4fx.view.ViewOrGroup.DropTargetType} for details.
    *
    * @return The property
    */
@@ -763,14 +763,16 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
    * @param dropTargetTypes New value
    */
   public void setDropTargetTypes(Set<DropTargetType> dropTargetTypes) {
-    this.dropTargetTypes.setValue(Collections.unmodifiableSet(Objects.requireNonNullElseGet(dropTargetTypes, HashSet::new)));
+    this.dropTargetTypes.setValue(
+        Collections.unmodifiableSet(Objects.requireNonNullElseGet(dropTargetTypes, HashSet::new)));
   }
 
   /**
    * Called during a drag and drop operation to determine the {@link DropTarget}.
    * <p>
-   * It depends on the settings of this instance and the settings and kind of drag source, which operations are possible in general, but at
-   * the bottom line the following possible two targets might exist:
+   * It depends on the settings of this instance and the settings and kind of drag source, which
+   * operations are possible in general, but at the bottom line the following possible two targets
+   * might exist:
    * <ul>
    *   <li>The drag source might (a single {@code View} or all {@code Views} of a different
    *   {@code ViewGroup} might be added to the views of this instance</li>

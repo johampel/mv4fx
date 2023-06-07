@@ -14,7 +14,7 @@ addition: you may drag and drop a `View` freely around:
 - Moving a `View` within its owning `ViewGroup` (similar to reordering the `Tabs` in a `TabPane`)
 - Moving a `View` to a different `ViewGroup` (not supported by JavaFX)
 - Moving a `View` in a way that an existing `ViewGroup` is automatically split (not supported by JavaFX) 
-- Moving a `Voew` to a new window. (not supported by JavaFX)
+- Moving a `View` to a new window. (not supported by JavaFX)
 
 Compared with a `TabPane` and `Tab` the components implemented here have more properties you may
 customize.
@@ -32,4 +32,16 @@ mvn test -Dtest=DemoApp
 
 ## Include into your project
 
-- Currently not published to Maven 
+#### Maven
+```xml
+    <dependency>
+      <groupId>de.hipphampel</groupId>
+      <artifactId>mv2fx</artifactId>
+      <version>VERSION/version>
+    </dependency>
+```
+#### Gradle
+```groovy
+    implementation 'de.hipphampel:mv2fx:VERSION'
+```
+

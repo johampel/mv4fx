@@ -42,6 +42,6 @@ mvn test -Dtest=DemoApp
 ```
 #### Gradle
 ```groovy
-    implementation 'de.hipphampel:mv2fx:VERSION'
+    implementation 'de.hipphampel:mv4fx:VERSION'
 ```
 

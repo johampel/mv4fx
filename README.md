@@ -36,7 +36,7 @@ mvn test -Dtest=DemoApp
 ```xml
     <dependency>
       <groupId>de.hipphampel</groupId>
-      <artifactId>mv2fx</artifactId>
+      <artifactId>mv4fx</artifactId>
       <version>VERSION/version>
     </dependency>
 ```

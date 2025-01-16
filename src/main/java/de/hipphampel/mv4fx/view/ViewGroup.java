@@ -138,6 +138,7 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   public static final String PROPERTY_DROP_SPLIT_SIDES = "dropSplitSides";
   public static final String PROPERTY_DRAGGING = "dragging";
   public static final String PROPERTY_DROP_TARGET = "dropTarget";
+  public static final String PROPERTY_AUTO_CLOSE = "autoClose";
 
   // Style definition stuff
   private static final StyleablePropertyFactory<ViewGroup> FACTORY = new StyleablePropertyFactory<>(
@@ -200,6 +201,7 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   private final SimpleStyleableObjectProperty<Set<String>> dropTags;
   private final SimpleStyleableObjectProperty<Set<DropTargetType>> dropTargetTypes;
   private final SimpleStyleableObjectProperty<Set<Side>> dropSplitSides;
+  private final BooleanProperty autoClose;
   private final BooleanProperty dragging;
   private final ObjectProperty<DropTarget> dropTarget;
 
@@ -240,6 +242,7 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
         Set.of(Side.TOP, Side.RIGHT, Side.BOTTOM, Side.LEFT));
     this.dragging = new SimpleBooleanProperty(this, PROPERTY_DRAGGING, false);
     this.dropTarget = new SimpleObjectProperty<>(this, PROPERTY_DROP_TARGET);
+    this.autoClose = new SimpleBooleanProperty(this, PROPERTY_AUTO_CLOSE, true);
     this.views.addListener(this::onViewsChanged);
 
     this.getStylesheets().add(Constants.CSS_URL);
@@ -252,18 +255,39 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   }
 
   /**
-   * Specifies, whether auto close this group.
+   * {@code AutoClose} property.
    * <p>
-   * The return value decides, whether the group is automatically closed/disposed, when the last
-   * view of the group is removed, either because the view has closed or moved away.
+   * This decides, whether the group is automatically closed/disposed, when the last view of the
+   * group is removed, either because the view has closed or moved away.
    * <p>
-   * By default, this method returns {@code true}, derived classes might implement more
-   * sophisticated logic
+   * The default value is {@code true}
+   *
+   * @return The property.
+   */
+  public BooleanProperty autoCloseProperty() {
+    return autoClose;
+  }
+
+  /**
+   * Convenience getter for the {@code autoClose} property.
+   * <p>
+   * See {@link #autoCloseProperty() autoCloseProperty} for details.
    *
    * @return The auto close flag
    */
   public boolean isAutoClose() {
-    return true;
+    return autoClose.get();
+  }
+
+  /**
+   * Convenience setter for the {@code autoClose} property.
+   * <p>
+   * See {@link #autoCloseProperty() autoCloseProperty} for details.
+   *
+   * @param autoClose The auto close flag
+   */
+  public void setAutoClose(boolean autoClose) {
+    this.autoClose.set(autoClose);
   }
 
   /**
@@ -514,7 +538,7 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
    * {@code tabMaxWidth} property.
    * <p>
    * This property controls the maximum width a tab may have. It is guaranteed that a tab never
-   * exceeds this limit, independent from its own settings.
+   * exceeds this limit, independent of its own settings.
    * <p>
    * This property can be also set via the CSS style {@code -mvf4x-tab-max-width}
    *

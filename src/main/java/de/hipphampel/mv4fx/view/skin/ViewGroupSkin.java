@@ -1500,8 +1500,8 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
     private final InvalidationListener sizeChangeListener;
     private final InvalidationListener draggingChangeListener;
     private final InvalidationListener maximizeChangeListener;
-    private Button closeButton;
-    private Button maximizeButton;
+    private Node closeButton;
+    private Node maximizeButton;
     private Node control;
     private Label label;
 
@@ -1616,13 +1616,12 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
           view.getTabNode() != null ? view.getTabNode().call(view.getViewGroup()
               .getSide()) : null;
       if (node != null) {
-        control = node;
         label = null;
       } else {
         if (this.label == null) {
           this.label = new Label();
         }
-        control = label;
+        node = label;
         this.label.setText(view.getTabLabel());
         this.label.setStyle(view.getTabStyle());
         this.label.setGraphic(view.getTabGraphic());
@@ -1630,8 +1629,8 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
         this.label.setContextMenu(view.getTabContextMenu());
         rotate(this.label.getGraphic());
       }
-      HBox.setHgrow(control, Priority.ALWAYS);
-      updateChildren();
+      HBox.setHgrow(node, Priority.ALWAYS);
+      updateChildren(node, maximizeButton, closeButton);
     }
 
     /**
@@ -1650,7 +1649,6 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
       }
     }
 
-
     /**
      * Called when the visibility of the action buttons has been changed.
      * <p>
@@ -1659,40 +1657,69 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
      * position, whether they are actually visible.
      */
     protected void onTabActionVisibilityChanged() {
-      if (view.getTabCloseActionVisibility() == null
-          || view.getTabCloseActionVisibility() == TabActionVisibility.NEVER) {
-        closeButton = null;
-      } else if (closeButton == null) {
-        closeButton = createCloseButton();
+      Node newCloseButton = null;
+      Node newMaximizeButton = null;
+      if (view.getTabCloseActionVisibility() != null
+          && view.getTabCloseActionVisibility() != TabActionVisibility.NEVER) {
+        newCloseButton = closeButton == null ? createCloseButton() : closeButton;
       }
 
-      if (view.getTabMaximizeActionVisibility() == null
-          || view.getTabMaximizeActionVisibility() == TabActionVisibility.NEVER
-          || !view.isMaximizable()) {
-        maximizeButton = null;
-      } else if (maximizeButton == null) {
-        maximizeButton = createMaximizeButton();
+      if (view.getTabMaximizeActionVisibility() != null
+          && view.getTabMaximizeActionVisibility() != TabActionVisibility.NEVER
+          && view.isMaximizable()) {
+        newMaximizeButton = maximizeButton == null ? createMaximizeButton() : maximizeButton;
       }
-      updateChildren();
+      updateChildren(control, newMaximizeButton, newCloseButton);
     }
 
     /**
      * Updates the children of this component.
      * <p>
      * It adds for sure the control (which is either a {@link Label} or the result of the
-     * {@link View#getTabNode() View.tabNodeCallback} and depending one the current state the action
+     * {@link View#getTabNode() View.tabNodeCallback} and depending on the current state the action
      * buttons
+     *
+     * @param newControl New Control
+     * @param newMaximizeButton New Maximize Button
+     * @param newCloseButton New Close Button
      */
-    protected void updateChildren() {
+
+    protected void updateChildren(Node newControl, Node newMaximizeButton, Node newCloseButton) {
       List<Node> children = getChildren();
-      children.clear();
-      children.add(control);
-      if (maximizeButton != null && isActionVisible(view.getTabMaximizeActionVisibility())) {
-        children.add(maximizeButton);
+
+      if (control != newControl) { // Note: newControl always != null
+        if (control == null) {
+          children.add(0, newControl);
+        } else {
+          children.set(0, newControl);
+        }
+        control = newControl;
       }
-      if (closeButton != null && isActionVisible(view.getTabCloseActionVisibility())) {
-        children.add(closeButton);
+
+      int index = maximizeButton == null ? -1 : children.indexOf(maximizeButton);
+      if (newMaximizeButton != null && isActionVisible(view.getTabMaximizeActionVisibility())) {
+        if (index != -1) {
+          children.set(index, newMaximizeButton);
+        } else {
+          children.add(1, newMaximizeButton);
+        }
+      } else if (index != -1) {
+        children.remove(index);
       }
+      maximizeButton = newMaximizeButton;
+
+      index = closeButton == null ? -1 : children.indexOf(closeButton);
+      if (newCloseButton != null && isActionVisible(view.getTabCloseActionVisibility())) {
+        if (index != -1) {
+          children.set(index, newCloseButton);
+        } else {
+          children.add(newCloseButton);
+        }
+      } else if (index != -1) {
+        children.remove(index);
+      }
+      closeButton = newCloseButton;
+
       requestLayout();
     }
 

@@ -35,7 +35,8 @@ public class ViewStage extends Stage {
   // Public constants
   public static final String PROPERTY_AUTO_CLOSE = "autoClose";
 
-  private final BooleanProperty autoClose = new SimpleBooleanProperty(this, PROPERTY_AUTO_CLOSE, true);
+  private final BooleanProperty autoClose = new SimpleBooleanProperty(this, PROPERTY_AUTO_CLOSE,
+      true);
 
   public ViewStage() {
     setOnCloseRequest(this::handleCloseRequest);
@@ -69,8 +70,8 @@ public class ViewStage extends Stage {
   /**
    * The {@code autoClose} property.
    * <p>
-   * This property is decides, whether the stage is automatically closed/disposed, when the last view of the stage is removed, either
-   * because the view has closed or moved away.
+   * This property decides, whether the stage is automatically closed/disposed, when the last view
+   * of the stage is removed, either because the view has closed or moved away.
    *
    * @return The property.
    */

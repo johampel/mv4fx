@@ -53,7 +53,8 @@ public class StringSetCssMetaData<S extends Styleable> extends
    * @param inherits         Indicates, whether CSS inheritance is wanted
    */
   public StringSetCssMetaData(String property,
-      Function<S, StyleableProperty<Set<String>>> propertyFunction, Set<String> initialValue, boolean inherits) {
+      Function<S, StyleableProperty<Set<String>>> propertyFunction, Set<String> initialValue,
+      boolean inherits) {
     super(property, new StringSetConverter(), initialValue, inherits);
     this.propertyFunction = propertyFunction;
   }

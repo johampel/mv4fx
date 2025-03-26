@@ -29,33 +29,36 @@ import javafx.scene.control.Control;
 /**
  * Supplemental interface implemented by {@link ViewGroup ViewGroups} and {@link View Views}.
  * <p>
- * Can be used in all situations, where an object might be either a {@code ViewGroup} or a {@code View}
+ * Can be used in all situations, where an object might be either a {@code ViewGroup} or a
+ * {@code View}
  * <p>
- * It provides those method that are required for drag and drop, more exactly those helper methods that are required to the source of the
- * drag and drop operation.
+ * It provides those method that are required for drag and drop, more exactly those helper methods
+ * that are required to the source of the drag and drop operation.
  */
 public interface ViewOrGroup {
 
   /**
    * Enum for the allowed drop targets when it comes to drag and drop.
    * <p>
-   * This enum describes, to which destinations the {@link ViewOrGroup} can be dropped in general. This enum is used by the
-   * {@link #getDropTargetTypes()} methods to tell, which targets are supported.
+   * This enum describes, to which destinations the {@link ViewOrGroup} can be dropped in general.
+   * This enum is used by the {@link #getDropTargetTypes()} methods to tell, which targets are
+   * supported.
    */
   enum DropTargetType {
     /**
      * Indicates that reordering is allowed.
      * <p>
-     * This is only relevant for {@link View Views} - if the {@code REORDER} target type is set, it is allowed to change the index of the
-     * view by dragging it in the same {@link ViewGroup}.
+     * This is only relevant for {@link View Views} - if the {@code REORDER} target type is set, it
+     * is allowed to change the index of the view by dragging it in the same {@link ViewGroup}.
      */
     REORDER,
 
     /**
      * Indicates that reparenting in a different {@link ViewGroup} is allowed.
      * <p>
-     * This means that the {@link ViewOrGroup} might be moved into a different {@code ViewGroup}. In general, a drag and drop operation with
-     * reparenting is only possible, if all {@link #getDragTags() drag tags} are available in the
+     * This means that the {@link ViewOrGroup} might be moved into a different {@code ViewGroup}. In
+     * general, a drag and drop operation with reparenting is only possible, if all
+     * {@link #getDragTags() drag tags} are available in the
      * {@linkplain ViewGroup#getDropTags() drop tags} of the target.
      */
     CHANGE_GROUP,
@@ -71,8 +74,9 @@ public interface ViewOrGroup {
   /**
    * Gets the tags for dragging.
    * <p>
-   * These tags are evaulated when attempting to drop this object into an other one. This is only possible, if all the tags in this set can
-   * be found in the {@linkplain ViewGroup#getDropTags() drop tags} of the target.
+   * These tags are evaluated when attempting to drop this object into another one. This is only
+   * possible, if all the tags in this set can be found in the
+   * {@linkplain ViewGroup#getDropTags() drop tags} of the target.
    *
    * @return The drag tags
    */
@@ -117,7 +121,8 @@ public interface ViewOrGroup {
   /**
    * Returns this as a {@link Control} instance.
    * <p>
-   * For {@link ViewGroup ViewGroups} this is the instance itself, for {@link View Views} this is the owning group
+   * For {@link ViewGroup ViewGroups} this is the instance itself, for {@link View Views} this is
+   * the owning group
    *
    * @return This instance
    */

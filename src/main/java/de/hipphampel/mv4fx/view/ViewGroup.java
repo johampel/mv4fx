@@ -62,8 +62,8 @@ import javafx.util.Callback;
  * Control that hosts {@link View Views}.
  * <p>
  * A {@code ViewGroup} is best compared with a {@code TabPane} known from the standard Java FX
- * controls. It allows to contain any number of of {@code Views}, whereas one of it is the active
- * one and its content is displayed in the group content area. Beside the content area the
+ * controls. It allows to contain any number of {@code Views}, whereas one of it is the active one
+ * and its content is displayed in the group content area. Beside the content area the
  * {@code ViewGroup} has a tab area, which shows for each view a "tab". Clicking the tab make the
  * corresponding view to the active one.
  * <p>
@@ -80,9 +80,9 @@ import javafx.util.Callback;
  *   tabs are present, so that the user can use the controls to navigate to the tabs that are not
  *   visible. Possible values are:
  *   <ul>
- *     <li>{@code arrows}: show two arrow buttons, one to navigate to the previous and an other one
+ *     <li>{@code arrows}: show two arrow buttons, one to navigate to the previous and another one
  *     tp the next view</li>
- *     <li>{@code dropdown}: show a button that opens a drop down to select a view. The drop down
+ *     <li>{@code dropdown}: show a button that opens a drop-down to select a view. The drop-down
  *     is realized as a popup windows, which supports scrolling and things like that. This is the
  *     default</li>
  *     <li>{@code both}: show both kind of button mentioned above</li>
@@ -97,7 +97,7 @@ import javafx.util.Callback;
  *   <li>{@code -mv4fx-drop-split-sides}: If set to one or more sides, this group can be split,
  *   whereas splitting is done vertically or horizontally and the current content is placed on one
  *   of the sides specified in this property and in the opposite side the object being dragged is
- *   dropped; when splitting, this group is reparented in a {@link ViewGroupContainer}, so that
+ *   dropped; when splitting, this group is re-parented in a {@link ViewGroupContainer}, so that
  *   the splitting is effectively realized by this new parent container. The default contains all
  *   sides</li>
  * </ul>
@@ -379,7 +379,7 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
   }
 
   /**
-   * Adds the geiven {@code view} at the specified {@code index} and selects it.
+   * Adds the given {@code view} at the specified {@code index} and selects it.
    *
    * @param index The index where to insert.
    * @param view  The {@code View} to add
@@ -691,7 +691,7 @@ public class ViewGroup extends Control implements GroupOrContainer, ViewOrGroup 
    * <p>
    * These tags are evaluated when attempting to drop an object into this one. This is only
    * possible, if the tags in this set are a super set of the tags found in the
-   * {@link ViewOrGroup#getDragTags()} tags} of the source or this set is empty.
+   * {@link ViewOrGroup#getDragTags() tags} of the source or this set is empty.
    *
    * @return The property
    */

@@ -25,9 +25,11 @@ package de.hipphampel.mv4fx.view;
 import javafx.scene.control.Control;
 
 /**
- * Supplemental interface implemented by {@link ViewGroup ViewGroups} and {@link ViewGroupContainer ViewGroupContainers}.
+ * Supplemental interface implemented by {@link ViewGroup ViewGroups} and
+ * {@link ViewGroupContainer ViewGroupContainers}.
  * <p>
- * Can be used in all situations, where an object might be either a {@code ViewGroup} or a {@code ViewGroupContainer}
+ * Can be used in all situations, where an object might be either a {@code ViewGroup} or a
+ * {@code ViewGroupContainer}
  */
 public interface GroupOrContainer {
 

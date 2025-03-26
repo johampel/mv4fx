@@ -1683,7 +1683,6 @@ public class ViewGroupSkin extends SkinBase<ViewGroup> {
      * @param newMaximizeButton New Maximize Button
      * @param newCloseButton New Close Button
      */
-
     protected void updateChildren(Node newControl, Node newMaximizeButton, Node newCloseButton) {
       List<Node> children = getChildren();
 

@@ -45,17 +45,20 @@ import javafx.scene.control.Tooltip;
 import javafx.util.Callback;
 
 /**
- * Represents a view to by shown in a {@link ViewGroup}.
+ * Represents a view to be shown in a {@link ViewGroup}.
  * <p>
- * A {@code View} is best compared with a {@code Tab} of a {@code TabPane}, regarding its functionality there are some similarities, but
- * also differences.
+ * A {@code View} is best compared with a {@code Tab} of a {@code TabPane}, regarding its
+ * functionality there are some similarities, but also differences.
  * <p>
- * Similar to a {@code Tab}, a {@code View} has a {@link #getContent() content} to be display in a {@link ViewGroup}, when the {@code View}
- * is selected. It also has several to properties to influence the tab title and graphic that is used to represent a {@code View} in the
- * header area of the {@code ViewGroup}. All in all, a {@code View} offers more ways to customize the appearance then a {@code Tab} does.
+ * Similar to a {@code Tab}, a {@code View} has a {@link #getContent() content} to be display in a
+ * {@link ViewGroup}, when the {@code View} is selected. It also has several to properties to
+ * influence the tab title and graphic that is used to represent a {@code View} in the header area
+ * of the {@code ViewGroup}. All in all, a {@code View} offers more ways to customize the appearance
+ * then a {@code Tab} does.
  * <p>
- * The most important feature is - compare with a {@code Tab} - that a {@code View} can be dragged and dropped to another {@code ViewGroup},
- * a new stage or other places, so {@code Views} are not bound to a fixed {@code ViewGroup}.
+ * The most important feature is - compare with a {@code Tab} - that a {@code View} can be dragged
+ * and dropped to another {@code ViewGroup}, a new stage or other places, so {@code Views} are not
+ * bound to a fixed {@code ViewGroup}.
  *
  * @see ViewGroup
  */
@@ -64,8 +67,8 @@ public class View implements ViewOrGroup {
   /**
    * Enum describing when a tab action is visible.
    * <p>
-   * Tab actions are the "close" or "maximize" button in the tab controls of the {@link ViewGroup}. The enum describes, when such a button
-   * is visible.
+   * Tab actions are the "close" or "maximize" button in the tab controls of the {@link ViewGroup}.
+   * The enum describes, when such a button is visible.
    */
   public enum TabActionVisibility {
     /**
@@ -134,11 +137,15 @@ public class View implements ViewOrGroup {
     this.tabNode = new SimpleObjectProperty<>(this, PROPERTY_TAB_NODE_CALLBACK);
     this.tabTooltip = new SimpleObjectProperty<>(this, PROPERTY_TAB_TOOLTIP, null);
     this.tabContextMenu = new SimpleObjectProperty<>(this, PROPERTY_TAB_CONTEXT_MENU, null);
-    this.tabCloseActionVisibility = new SimpleObjectProperty<>(this, PROPERTY_TAB_CLOSE_ACTION, TabActionVisibility.MOUSE_OVER);
-    this.tabMaximizeActionVisibility = new SimpleObjectProperty<>(this, PROPERTY_TAB_MAXIMIZE_ACTION, TabActionVisibility.NEVER);
-    this.dragTags = new SimpleSetProperty<>(this, PROPERTY_DRAG_TAGS, FXCollections.observableSet());
+    this.tabCloseActionVisibility = new SimpleObjectProperty<>(this, PROPERTY_TAB_CLOSE_ACTION,
+        TabActionVisibility.MOUSE_OVER);
+    this.tabMaximizeActionVisibility = new SimpleObjectProperty<>(this,
+        PROPERTY_TAB_MAXIMIZE_ACTION, TabActionVisibility.NEVER);
+    this.dragTags = new SimpleSetProperty<>(this, PROPERTY_DRAG_TAGS,
+        FXCollections.observableSet());
     this.dropTargetTypes = new SimpleSetProperty<>(this, PROPERTY_DROP_TARGET_TYPES,
-        FXCollections.observableSet(DropTargetType.REORDER, DropTargetType.CHANGE_GROUP, DropTargetType.NEW_WINDOW));
+        FXCollections.observableSet(DropTargetType.REORDER, DropTargetType.CHANGE_GROUP,
+            DropTargetType.NEW_WINDOW));
     this.dragging = new SimpleBooleanProperty(this, PROEPRTY_DRAGGING, false);
     this.maximizable = new SimpleBooleanProperty(this, PROPERTY_MAXIMIZABLE, true);
     this.maximized = new SimpleBooleanProperty(this, PROPERTY_MAXIMIZED, false);
@@ -158,7 +165,8 @@ public class View implements ViewOrGroup {
   /**
    * The {@code viewGroup} property.
    * <p>
-   * This property is automatically computed and contains the {@link ViewGroup} the {@code View} is currently member of.
+   * This property is automatically computed and contains the {@link ViewGroup} the {@code View} is
+   * currently member of.
    *
    * @return The property.
    */
@@ -218,8 +226,9 @@ public class View implements ViewOrGroup {
   /**
    * {@code tabLabel} property.
    * <p>
-   * This property allows to specify the text of the label representing the {@code View}. Such labels are used to render the tab of the view
-   * (unless a {@link #tabNodeProperty() tabNode} is specified), or in other labels, e.g. when representing the view in a list.
+   * This property allows to specify the text of the label representing the {@code View}. Such
+   * labels are used to render the tab of the view (unless a {@link #tabNodeProperty() tabNode} is
+   * specified), or in other labels, e.g. when representing the view in a list.
    *
    * @return The property
    */
@@ -252,8 +261,9 @@ public class View implements ViewOrGroup {
   /**
    * {@code tabStyle} property.
    * <p>
-   * This property allows to specify the CSS style of the label representing the {@code View}. Such labels are used to render the tab of the
-   * view (unless a {@link #tabNodeProperty() tabNode} is specified), or in other labels, e.g. when representing the view in a list.
+   * This property allows to specify the CSS style of the label representing the {@code View}. Such
+   * labels are used to render the tab of the view (unless a {@link #tabNodeProperty() tabNode} is
+   * specified), or in other labels, e.g. when representing the view in a list.
    *
    * @return The property
    */
@@ -286,10 +296,12 @@ public class View implements ViewOrGroup {
   /**
    * {@code tabGraphic} property.
    * <p>
-   * This property allows to specify the graphic of the label representing the {@code View}. Such labels are used to render the tab of the
-   * view (unless a {@link #tabNodeProperty() tabNode} is specified), or in other labels, e.g. when representing the view in a list.
+   * This property allows to specify the graphic of the label representing the {@code View}. Such
+   * labels are used to render the tab of the view (unless a {@link #tabNodeProperty() tabNode} is
+   * specified), or in other labels, e.g. when representing the view in a list.
    * <p>
-   * When used in tabs, the graphic is automatically rotate according to the side, so that it is always shown upright.
+   * When used in tabs, the graphic is automatically rotate according to the side, so that it is
+   * always shown upright.
    *
    * @return The property
    */
@@ -322,13 +334,15 @@ public class View implements ViewOrGroup {
   /**
    * {@code tabNode} property.
    * <p>
-   * This property allows to specify a {@link Callback} that is called to create the inner control of the tab for the view. If there are
-   * action buttons (see {@link #tabCloseActionVisibilityProperty() tabCloseAction} and
-   * {@link #tabMaximizeActionVisibilityProperty() tabMaximizeAction}), these are rendered separately from the inner tab control. By
-   * default, this is {@code null}.
+   * This property allows to specify a {@link Callback} that is called to create the inner control
+   * of the tab for the view. If there are action buttons (see
+   * {@link #tabCloseActionVisibilityProperty() tabCloseAction} and
+   * {@link #tabMaximizeActionVisibilityProperty() tabMaximizeAction}), these are rendered
+   * separately from the inner tab control. By default, this is {@code null}.
    * <p>
-   * In case this property is set, the {@link #tabLabelProperty() tabLabel}, {@link #tabStyleProperty() tabStyle}, and
-   * {@link #tabGraphicProperty()} tabGraphic} property are only used for rendering labels for representing the view (e.g. in lists)
+   * In case this property is set, the {@link #tabLabelProperty() tabLabel},
+   * {@link #tabStyleProperty() tabStyle}, and {@link #tabGraphicProperty() tabGraphic} property
+   * are only used for rendering labels for representing the view (e.g. in lists)
    * <p>
    * By default, this property is {@code null}
    *
@@ -352,7 +366,8 @@ public class View implements ViewOrGroup {
   /**
    * Convenience getter for the {@code tabCloseActionVisibility} property.
    * <p>
-   * See documentation of {@link #tabCloseActionVisibilityProperty() tabCloseAction} property for details.
+   * See documentation of {@link #tabCloseActionVisibilityProperty() tabCloseAction} property for
+   * details.
    *
    * @return The current value.
    */
@@ -363,7 +378,8 @@ public class View implements ViewOrGroup {
   /**
    * {@code tabCloseActionVisibility} property.
    * <p>
-   * This property controls, under which conditions a button is shown in the tab to close the {@code View}.
+   * This property controls, under which conditions a button is shown in the tab to close the
+   * {@code View}.
    * <p>
    * By default, the button is visible only if the mouse is over the tab
    *
@@ -376,7 +392,8 @@ public class View implements ViewOrGroup {
   /**
    * Convenience setter for the {@code tabCloseActionVisibility} property.
    * <p>
-   * See documentation of {@link #tabCloseActionVisibilityProperty() tabCloseActionVisibility} property for details.
+   * See documentation of {@link #tabCloseActionVisibilityProperty() tabCloseActionVisibility}
+   * property for details.
    *
    * @param tabCloseActionVisibility New value
    */
@@ -387,7 +404,8 @@ public class View implements ViewOrGroup {
   /**
    * Convenience getter for the {@code tabMaximizeActionVisibility} property.
    * <p>
-   * See documentation of {@link #tabMaximizeActionVisibilityProperty() tabMaximizeActionVisibility} property for details.
+   * See documentation of {@link #tabMaximizeActionVisibilityProperty() tabMaximizeActionVisibility}
+   * property for details.
    *
    * @return The current value.
    */
@@ -398,7 +416,8 @@ public class View implements ViewOrGroup {
   /**
    * {@code tabMaximizeActionVisibility} property.
    * <p>
-   * This property controls, under which conditions a button is shown in the tab to maximize the {@code View}.
+   * This property controls, under which conditions a button is shown in the tab to maximize the
+   * {@code View}.
    * <p>
    * By default, the button is not visible.
    *
@@ -411,7 +430,8 @@ public class View implements ViewOrGroup {
   /**
    * Convenience setter for the {@code tabMaximizeActionVisibility} property.
    * <p>
-   * See documentation of {@link #tabMaximizeActionVisibilityProperty() tabMaximizeActionVisibility} property for details.
+   * See documentation of {@link #tabMaximizeActionVisibilityProperty() tabMaximizeActionVisibility}
+   * property for details.
    *
    * @param tabMaximizeActionVisibility New value
    */
@@ -433,7 +453,8 @@ public class View implements ViewOrGroup {
   /**
    * {@code tabTooltip} property.
    * <p>
-   * This property controls the {@link Tooltip} that belongs to the view. The tooltip is shown in the tab area of the view.
+   * This property controls the {@link Tooltip} that belongs to the view. The tooltip is shown in
+   * the tab area of the view.
    *
    * @return The property
    */
@@ -466,7 +487,8 @@ public class View implements ViewOrGroup {
   /**
    * {@code tabContextMenu} property.
    * <p>
-   * This property controls the {@link ContextMenu} that belongs to the view. The context menu is shown in the tab area of the view.
+   * This property controls the {@link ContextMenu} that belongs to the view. The context menu is
+   * shown in the tab area of the view.
    *
    * @return The property
    */
@@ -502,8 +524,9 @@ public class View implements ViewOrGroup {
    * <p>
    * This property contains the drag tags assigned to this instance.
    * <p>
-   * These tags are evaulated when attempting to drop this object into an other one. This is only possible, if all the tags in this set can
-   * be found in the {@link ViewGroup#getDropTags() drop tags} of the target.
+   * These tags are evaulated when attempting to drop this object into an other one. This is only
+   * possible, if all the tags in this set can be found in the
+   * {@link ViewGroup#getDropTags() drop tags} of the target.
    *
    * @return The property
    */
@@ -519,7 +542,8 @@ public class View implements ViewOrGroup {
    * @param dragTags New value
    */
   public void setDragTags(Set<String> dragTags) {
-    this.dragTags.setValue(FXCollections.observableSet(Objects.requireNonNullElseGet(dragTags, HashSet::new)));
+    this.dragTags.setValue(
+        FXCollections.observableSet(Objects.requireNonNullElseGet(dragTags, HashSet::new)));
   }
 
   /**
@@ -553,17 +577,18 @@ public class View implements ViewOrGroup {
    * @param dropTargetTypes New value
    */
   public void setDropTargetTypes(Set<DropTargetType> dropTargetTypes) {
-    this.dropTargetTypes.set(FXCollections.observableSet(Objects.requireNonNullElseGet(dropTargetTypes, HashSet::new)));
+    this.dropTargetTypes.set(
+        FXCollections.observableSet(Objects.requireNonNullElseGet(dropTargetTypes, HashSet::new)));
   }
 
   /**
    * Check, whether closing this {@link View} is allowed.
    * <p>
-   * This implementation return {@code true} by default, derived classes might implement a decision here to decide, whether it is safe to
-   * delete the {@code View}.
+   * This implementation return {@code true} by default, derived classes might implement a decision
+   * here to decide, whether it is safe to delete the {@code View}.
    * <p>
-   * This method is called internally always just before any attempt to close the {@code View}; however the {@link #close() close} method
-   * itself does not call this method
+   * This method is called internally always just before any attempt to close the {@code View};
+   * however the {@link #close() close} method itself does not call this method
    *
    * @return {@code true} if allowed
    */
@@ -574,9 +599,9 @@ public class View implements ViewOrGroup {
   /**
    * Closes this {@code View}.
    * <p>
-   * Closing means that the view is removed from the {@link ViewGroup}. It also normalizes the entire hierarchy of the
-   * {@link ViewGroupContainer ViewGroupContainers} and {@code ViewGroups} to close and remove all empty components that are allowed to be
-   * auto closed.
+   * Closing means that the view is removed from the {@link ViewGroup}. It also normalizes the
+   * entire hierarchy of the {@link ViewGroupContainer ViewGroupContainers} and {@code ViewGroups}
+   * to close and remove all empty components that are allowed to be auto closed.
    */
   public void close() {
     if (getViewGroup() != null) {

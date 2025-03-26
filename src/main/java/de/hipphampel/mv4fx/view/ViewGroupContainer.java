@@ -46,10 +46,10 @@ import javafx.scene.control.Skin;
 /**
  * Container that holds one or two {@link ViewGroup ViewGroups} or {@code ViewGroupContainers}.
  * <p>
- * This control is similar to a {@code SplitPane}, witht the following exceptions:
+ * This control is similar to a {@code SplitPane}, with the following exceptions:
  * <ul>
- * <li>It contains at most two sub components</li>
- * <li>The sub components are either {@code ViewGroups} or {@code ViewGroupContainers}</li>
+ * <li>It contains at most two subcomponents</li>
+ * <li>The subcomponents are either {@code ViewGroups} or {@code ViewGroupContainers}</li>
  * <li>If there is only one child, this single child occupies the entire area</li>
  * <li>There are styles/properties to control the resizing and drag &amp; drop behaviour</li>
  * </ul>
@@ -60,13 +60,13 @@ import javafx.scene.control.Skin;
  *   possible values are {@code vertical} and {@code horizontal}, whereas {@code horizontal} is the
  *   default</li>
  *   <li>{@code -mv4fx-divider-drag-mode}: defines the mode how to drag the divider that sits between
- *   the left/top and right/bottom component. The modes affects only the position change of the divider
+ *   the left/top and right/bottom component. The mode affects only the position change of the divider
  *   by dragging it. It is always possible to change the position of the divider programmatically.
  *   The following modes are known:
  *   <ul>
  *     <li>{@code fixed} - the divider cannot be dragged by the user</li>
  *     <li>{@code free} - the divider can be positioned freely without any restriction</li>
- *     <li>{@code respect-min-size} - the divider cannot be dragged to a position that underflows
+ *     <li>{@code respect-min-size} - the divider cannot be dragged to a position that under flows
  *     the minimum size of a child</li>
  *   </ul>
  *   The default is {@code free}</li>
@@ -87,8 +87,8 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   /**
    * Enumeration describing how the divider might be dragged by the user.
    * <p>
-   * These constants describe just the way how the divider can be dragged; in generaö it can be positioned programmatically without any
-   * restriction.
+   * These constants describe just the way how the divider can be dragged; in generaö it can be
+   * positioned programmatically without any restriction.
    */
   public enum DividerDragMode {
 
@@ -103,8 +103,9 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
     FREE,
 
     /**
-     * If possible, the divider cannot dragged so that the the min size of the components is not underflowed. In case that the container is
-     * smaller than the sum of the groups, the divider is effectively fixed then.
+     * If possible, the divider cannot dragged so that the the min size of the components is not
+     * underflowed. In case that the container is smaller than the sum of the groups, the divider is
+     * effectively fixed then.
      */
     RESPECT_MIN_SIZE
   }
@@ -115,14 +116,14 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   public enum ResizePolicy {
 
     /**
-     * When resizing, try to keep the size of the left/top component. If the size of the container becomes less then this left/top
-     * component, the component is shrinked as well.
+     * When resizing, try to keep the size of the left/top component. If the size of the container
+     * becomes less then this left/top component, the component is shrinked as well.
      */
     KEEP_LEFT_TOP_SIZE,
 
     /**
-     * When resizing, try to keep the size of the roght/bottom component. If the size of the container becomes less then this right/vbottom
-     * component, the component is shrinked as well.
+     * When resizing, try to keep the size of the roght/bottom component. If the size of the
+     * container becomes less then this right/vbottom component, the component is shrinked as well.
      */
     KEEP_RIGHT_BOTTOM_SIZE,
 
@@ -227,8 +228,8 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   /**
    * The {@code leftTop} property.
    * <p>
-   * This property contains the component to show in the left or top area of the container. In case it is the only one, it occupies the
-   * entire space of the container
+   * This property contains the component to show in the left or top area of the container. In case
+   * it is the only one, it occupies the entire space of the container
    *
    * @return The property
    */
@@ -261,8 +262,8 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   /**
    * The {@code rightBottom} property.
    * <p>
-   * This property contains the component to show in the right or bottom area of the container. In case it is the only one, it occupies the
-   * entire space of the container
+   * This property contains the component to show in the right or bottom area of the container. In
+   * case it is the only one, it occupies the entire space of the container
    *
    * @return The property
    */
@@ -330,7 +331,8 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   /**
    * The {@code dividerDragMode} property.
    * <p>
-   * This property controls, how the user might drag the divider. The {@link DividerDragMode} for the available values
+   * This property controls, how the user might drag the divider. The {@link DividerDragMode} for
+   * the available values
    *
    * @return The property
    */
@@ -363,8 +365,8 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   /**
    * The {@code dividerSize} property.
    * <p>
-   * This property defines the size of the divider, so its height, when orientation is vertical or its width, if the orientation is
-   * horizontal
+   * This property defines the size of the divider, so its height, when orientation is vertical or
+   * its width, if the orientation is horizontal
    *
    * @return The property
    */
@@ -397,11 +399,13 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   /**
    * The {@code position} property.
    * <p>
-   * This property contains the relative position of the divider. If its value is {@code 0.0}, the left/top component occupies {@code 0%}
-   * and the right/bottom {@code 100%} of the available space; a value of {@code 0.5} means that both components occupy the same amount.
+   * This property contains the relative position of the divider. If its value is {@code 0.0}, the
+   * left/top component occupies {@code 0%} and the right/bottom {@code 100%} of the available
+   * space; a value of {@code 0.5} means that both components occupy the same amount.
    * <p>
-   * In order to get or set the absolute position of the divider, use {@link #absolutePositionProperty()}. Note that {@code position} and
-   * {@code absolutePosition} depend each other - modification on one of them leads to a modification of the other
+   * In order to get or set the absolute position of the divider, use
+   * {@link #absolutePositionProperty()}. Note that {@code position} and {@code absolutePosition}
+   * depend each other - modification on one of them leads to a modification of the other
    *
    * @return The property.
    */
@@ -423,7 +427,8 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   /**
    * Convenience getter for the {@code absolutePosition} property.
    * <p>
-   * See documentation of {@link #absolutePositionProperty() absolutePosition} property for details.
+   * See documentation of {@link #absolutePositionProperty() absolutePosition} property for
+   * details.
    *
    * @return The current value
    */
@@ -434,11 +439,12 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   /**
    * The {@code absolutePosition} property.
    * <p>
-   * This property contains the absolute position of the divider. Basically, it contains the effective width/height of tbe left/top
-   * component.
+   * This property contains the absolute position of the divider. Basically, it contains the
+   * effective width/height of tbe left/top component.
    * <p>
-   * In order to get or set the relative position of the divider, use {@link #positionProperty()}. Note that {@code position} and
-   * {@code absolutePosition} depend each other - modification on one of them leads to a modification of the other
+   * In order to get or set the relative position of the divider, use {@link #positionProperty()}.
+   * Note that {@code position} and {@code absolutePosition} depend each other - modification on one
+   * of them leads to a modification of the other
    *
    * @return The property.
    */
@@ -449,7 +455,8 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   /**
    * Convenience setter for the {@code absolutePosition} property.
    * <p>
-   * See documentation of {@link #absolutePositionProperty() absolutePosition} property for details.
+   * See documentation of {@link #absolutePositionProperty() absolutePosition} property for
+   * details.
    *
    * @param value The new value
    */
@@ -471,8 +478,8 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   /**
    * The {@code resizePolicy} property.
    * <p>
-   * This property defines how the divider is positioned when then container is resized. The exact sizing behaviour is described in the
-   * documentation of the {@link ResizePolicy}
+   * This property defines how the divider is positioned when then container is resized. The exact
+   * sizing behaviour is described in the documentation of the {@link ResizePolicy}
    *
    * @return The property.
    */
@@ -516,9 +523,10 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   /**
    * Normalizes the object graph.
    * <p>
-   * Normalization tries to remove subordinated {@code ViewGroupContainers} as far as possible. In case the left-top or right-bottom child
-   * is a {@code ViewGroupContainer} that has less than two children, it can be replaced with the single child or {@code null}; this is done
-   * by this method. This method works recursively.
+   * Normalization tries to remove subordinated {@code ViewGroupContainers} as far as possible. In
+   * case the left-top or right-bottom child is a {@code ViewGroupContainer} that has less than two
+   * children, it can be replaced with the single child or {@code null}; this is done by this
+   * method. This method works recursively.
    */
   public void normalize() {
     GroupOrContainer leftTop = normalize(getLeftTop());
@@ -586,10 +594,12 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
    * </ul>
    *
    * @param side                 The side where to move the existing child to, if any.
-   * @param newContainerSupplier {@link Supplier} that creates a new {@link ViewGroupContainer} if required
+   * @param newContainerSupplier {@link Supplier} that creates a new {@link ViewGroupContainer} if
+   *                             required
    * @return The {@code ViewGroupContainer} containing the previous content now.
    */
-  public ViewGroupContainer splitLeftTop(Side side, Supplier<ViewGroupContainer> newContainerSupplier) {
+  public ViewGroupContainer splitLeftTop(Side side,
+      Supplier<ViewGroupContainer> newContainerSupplier) {
     if (hasTwoChildren()) {
       GroupOrContainer lt = getLeftTop();
       ViewGroupContainer newContainer = newContainerSupplier.get();
@@ -602,7 +612,8 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
   }
 
   /**
-   * Splits the right/bottom side of the container so that the current content appears on {@code side}.
+   * Splits the right/bottom side of the container so that the current content appears on
+   * {@code side}.
    * <p>
    * The exact result depends on the question, how many children there are currently present.
    * <ul>
@@ -617,10 +628,12 @@ public class ViewGroupContainer extends Control implements GroupOrContainer {
    * </ul>
    *
    * @param side                 The side where to move the existing child to, if any.
-   * @param newContainerSupplier {@link Supplier} that creates a new {@link ViewGroupContainer} if required
+   * @param newContainerSupplier {@link Supplier} that creates a new {@link ViewGroupContainer} if
+   *                             required
    * @return The {@code ViewGroupContainer} containing the previous content now.
    */
-  public ViewGroupContainer splitRightBottom(Side side, Supplier<ViewGroupContainer> newContainerSupplier) {
+  public ViewGroupContainer splitRightBottom(Side side,
+      Supplier<ViewGroupContainer> newContainerSupplier) {
     if (hasTwoChildren()) {
       GroupOrContainer rb = getRightBottom();
       ViewGroupContainer newContainer = newContainerSupplier.get();

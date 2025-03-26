@@ -29,7 +29,7 @@ import javafx.scene.layout.Region;
 
 
 /**
- * {@link StyleableObjectProperty} requesting relayout on changes.
+ * {@link StyleableObjectProperty} requesting re-layout on changes.
  */
 public class LayoutRequestingStyleableObjectProperty<T> extends StyleableObjectProperty<T> {
 

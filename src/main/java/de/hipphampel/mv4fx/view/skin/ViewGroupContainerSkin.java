@@ -115,9 +115,9 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
   /**
    * Called when the size changes.
    * <p>
-   * Recalculates the position of the divider, depending on the resizeing policiy
+   * Recalculates the position of the divider, depending on the resizing policy
    *
-   * @param trigger  Obseverable triggering the event
+   * @param trigger  Observable triggering the event
    * @param oldValue The old value
    * @param newValue The new value
    */
@@ -147,7 +147,7 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
   /**
    * Called when the padding/insets has been changed,
    * <p>
-   * Bsically, relayouts the component.
+   * Basically, re-layouts the component.
    */
   protected void onInsetsChanged(Observable trigger, Insets oldValue, Insets newValue) {
     doIfNotUpdatingPosition(
@@ -159,7 +159,7 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
   /**
    * Called when the orientation has been changed,
    * <p>
-   * Bsically, relayouts the component.
+   * Basically, re-layouts the component.
    */
   protected void onOrientationChanged() {
     doIfNotUpdatingPosition(() -> updateDividerPosition(
@@ -170,7 +170,7 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
   /**
    * Called when the absolute position has been changed.
    * <p>
-   * Recaluclates the (relative) position and relayouts.
+   * Recalculates the (relative) position and re-layouts.
    */
   protected void onAbsolutePositionChanged() {
     ViewGroupContainer container = getSkinnable();
@@ -182,7 +182,7 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
   /**
    * Called when the (relative) position has been changed.
    * <p>
-   * Recaluclates the absolute position and relayouts.
+   * Recalculates the absolute position and re-layouts.
    */
   protected void onPositionChanged() {
     ViewGroupContainer container = getSkinnable();
@@ -194,8 +194,8 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
   /**
    * Called when the children have been changed.
    * <p>
-   * This is called whenever then left/top or right/bottom component has been changed. Depending on the change, a divider is displayed or
-   * not. It relayouts ths container
+   * This is called whenever then left/top or right/bottom component has been changed. Depending on
+   * the change, a divider is displayed or not. It re-layouts ths container
    */
   protected void onChildrenChanged() {
     ViewGroupContainer control = getSkinnable();
@@ -212,7 +212,8 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
     control.requestLayout();
   }
 
-  private void onChildrenChangedMaximized(ViewGroupContainer control, ObservableList<Node> children) {
+  private void onChildrenChangedMaximized(ViewGroupContainer control,
+      ObservableList<Node> children) {
     children.add(control.getMaximizedView().getContent());
   }
 
@@ -242,7 +243,8 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
   /**
    * Computes the  position.
    * <p>
-   * The method is called whenever the absolute position has been changed, based on this information the  position is recalculated.
+   * The method is called whenever the absolute position has been changed, based on this information
+   * the  position is recalculated.
    *
    * @param absolutePosition The current absolute position
    * @return The relative position
@@ -255,7 +257,8 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
   /**
    * Computes the absolute position.
    * <p>
-   * The method is called whenever the position has been changed, based on this information the absolute position is recalculated.
+   * The method is called whenever the position has been changed, based on this information the
+   * absolute position is recalculated.
    *
    * @param position The current (relative) position
    * @return The absolute position
@@ -303,13 +306,15 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
     }
   }
 
-  private void layoutChildrenMaximized(ViewGroupContainer container, double x, double y, double w, double h) {
+  private void layoutChildrenMaximized(ViewGroupContainer container, double x, double y, double w,
+      double h) {
     Node control = container.getMaximizedView().getContent();
     control.relocate(x, y);
     control.resize(w, h);
   }
 
-  private void layoutChildrenNormal(ViewGroupContainer container, double x, double y, double w, double h) {
+  private void layoutChildrenNormal(ViewGroupContainer container, double x, double y, double w,
+      double h) {
     double position = container.getAbsolutePosition();
     if (position == Region.USE_COMPUTED_SIZE) {
       position = computeAbsolutePosition(container.getPosition());
@@ -455,8 +460,8 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
   /**
    * The divider.
    * <p>
-   * The divider appears if the container hosts two children. The divider allows to change the size of the children by dragging it with the
-   * mouse
+   * The divider appears if the container hosts two children. The divider allows to change the size
+   * of the children by dragging it with the mouse
    */
   protected class Divider extends Pane {
 
@@ -528,7 +533,8 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
         return;
       }
       double newPos = getRelevantMousePosition(event, true) - dragStart;
-      if (container.getDividerDragMode() == DividerDragMode.RESPECT_MIN_SIZE && !dragRange.contains(newPos)) {
+      if (container.getDividerDragMode() == DividerDragMode.RESPECT_MIN_SIZE && !dragRange.contains(
+          newPos)) {
         return;
       }
       getSkinnable().setAbsolutePosition(
@@ -539,7 +545,8 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
     /**
      * Called when the mouse button is pressed.
      * <p>
-     * If the primary button is pressen, it starts the drag mode, the cursor is set to drag mode anyway.
+     * If the primary button is pressed, it starts the drag mode, the cursor is set to drag mode
+     * anyway.
      *
      * @param event The event
      */
@@ -555,7 +562,8 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
     /**
      * Called when the mouse button is released.
      * <p>
-     * Resets the cursor to the default, if the mouse pointer is not longer inside the divider and stops any kind of dragging.
+     * Resets the cursor to the default, if the mouse pointer is no longer inside the divider and
+     * stops any kind of dragging.
      *
      * @param event The event
      */
@@ -593,8 +601,8 @@ public class ViewGroupContainerSkin extends SkinBase<ViewGroupContainer> {
      * Calculates the range of the possible drag positions.
      * <p>
      * This is calculated based on the current side of the container and the
-     * {@link ViewGroupContainer#dividerDragModeProperty() dividerDragMode}. The method returns {@code null} if the divider is not
-     * draggable.
+     * {@link ViewGroupContainer#dividerDragModeProperty() dividerDragMode}. The method returns
+     * {@code null} if the divider is not draggable.
      *
      * @return The range
      */

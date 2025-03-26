@@ -117,9 +117,4 @@ public class Constants {
    * Style class for a drop box
    */
   public static final String CLASS_DROP_TARGET = "drop-target";
-
-  /**
-   * Style class for a window created during by a drag and drop operation
-   */
-  public static final String CLASS_DROP_EXTRA_WINDOW = "drop-extra-window";
 }

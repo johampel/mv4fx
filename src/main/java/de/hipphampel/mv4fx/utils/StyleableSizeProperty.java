@@ -30,7 +30,7 @@ import javafx.scene.layout.Region;
 /**
  * {@link StyleableDoubleProperty} representing values that influence the size of a {@link Region}.
  * <p>
- * It requests the relayout of the parent node, in case the value is invalidated.
+ * It requests the re-layout of the parent node, in case the value is invalidated.
  */
 public class StyleableSizeProperty extends StyleableDoubleProperty {
 

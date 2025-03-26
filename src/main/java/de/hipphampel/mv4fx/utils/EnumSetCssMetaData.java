@@ -56,14 +56,14 @@ public class EnumSetCssMetaData<S extends Styleable, T extends Enum<T>> extends 
    */
   public EnumSetCssMetaData(String property, Function<S, StyleableProperty<Set<T>>> propertyFunction, Class<T> enumClass,
       Set<T> initialValue, boolean inherits) {
-    super(property, new EnumSetConverter<T>(enumClass), initialValue, inherits);
+    super(property, new EnumSetConverter<>(enumClass), initialValue, inherits);
     this.propertyFunction = propertyFunction;
   }
 
   @Override
   public boolean isSettable(S styleable) {
     StyleableProperty<Set<T>> sp = getStyleableProperty(styleable);
-    return sp != null && (!(sp instanceof Property p) || !p.isBound());
+    return sp != null && (!(sp instanceof Property<?> p) || !p.isBound());
   }
 
   @Override

@@ -27,11 +27,13 @@ import java.util.Objects;
 /**
  * Helper to keep the state of a drag and drop operation.
  * <p>
- * Since there could be only one drag and drop operation at a point in time, there exists only one instance, which can be accessed via the
- * {@link #getInstance() getInstance()} method, which also exists, if no actual drag and drop operation is in progress.
+ * Since there could be only one drag and drop operation at a point in time, there exists only one
+ * instance, which can be accessed via the {@link #getInstance() getInstance()} method, which also
+ * exists, if no actual drag and drop operation is in progress.
  * <p>
- * To allow an alternative implementation, there is a {@link #setInstance(DragAndDropContext) setInstance()} method, which allows to replace
- * the default implementation, namely the {@link DefaultDragAndDropContext}
+ * To allow an alternative implementation, there is a
+ * {@link #setInstance(DragAndDropContext) setInstance()} method, which allows to replace the
+ * default implementation, namely the {@link DefaultDragAndDropContext}
  */
 public interface DragAndDropContext {
 
@@ -74,8 +76,8 @@ public interface DragAndDropContext {
   /**
    * Starts a drag and drop operation with the given parameters.
    * <p>
-   * The operation can be updated by calling  {@link #update(double, double) update} or terminated by {@link #cancel() cancel} or
-   * {@link #confirm(double, double) confirm}
+   * The operation can be updated by calling  {@link #update(double, double) update} or terminated
+   * by {@link #cancel() cancel} or {@link #confirm(double, double) confirm}
    *
    * @param dragSource Object being dragged
    * @param screenX    The screen X coordinate where the operation starts
@@ -88,8 +90,8 @@ public interface DragAndDropContext {
    * <p>
    * The
    *
-   * @param screenX
-   * @param screenY
+   * @param screenX The screen X coordinate where the operation ends
+   * @param screenY The screen Y coordinate where the operation ends
    */
   void confirm(double screenX, double screenY);
 
@@ -103,8 +105,8 @@ public interface DragAndDropContext {
   /**
    * Called to update the current context.
    * <p>
-   * This method is called when the mouse is moved to the given screen position. The basic aim is to update the
-   * {@link #getDropTarget() drop target} according to the new position.
+   * This method is called when the mouse is moved to the given screen position. The basic aim is to
+   * update the {@link #getDropTarget() drop target} according to the new position.
    *
    * @param screenX The X screen position of the mouse
    * @param screenY The Y screen position of the mouse
@@ -113,7 +115,7 @@ public interface DragAndDropContext {
 
   /**
    * Creates a new {@link ViewStage}.
-   *
+   * <p>
    * The method is called when the drop target indicates that a new stages has to be created.
    *
    * @return The new {@code ViewStage}
@@ -138,7 +140,8 @@ public interface DragAndDropContext {
    * @param dropTargetParent The target {@code ViewGroupContainer}, might be {@code null}
    * @return The newly created {@code ViewGroupContainer}
    */
-  default ViewGroupContainer newViewGroupContainer(GroupOrContainer dragSourceParent, ViewGroupContainer dropTargetParent) {
+  default ViewGroupContainer newViewGroupContainer(GroupOrContainer dragSourceParent,
+      ViewGroupContainer dropTargetParent) {
     ViewGroupContainer container = new ViewGroupContainer();
     if (dropTargetParent != null) {
       container.setOrientation(dropTargetParent.getOrientation());
@@ -156,8 +159,8 @@ public interface DragAndDropContext {
    * <li>When a {@link ViewGroupContainer} is split and a new {@code ViewGroup} needs to be created</li>
    * </ol>
    *
-   * @param template
-   * @return
+   * @param template The template for the new {@code ViewGroup}
+   * @return The new {@code ViewGroup}
    */
   default ViewGroup newViewGroup(ViewGroup template) {
     ViewGroup copy = new ViewGroup();

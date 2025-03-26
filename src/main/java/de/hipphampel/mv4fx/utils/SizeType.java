@@ -25,7 +25,7 @@ package de.hipphampel.mv4fx.utils;
 import javafx.scene.Node;
 
 /**
- * Enum describing the type of a size.
+ * Enum describing the type of size.
  */
 public enum SizeType {
   /** Describes the minimum size of a component. */

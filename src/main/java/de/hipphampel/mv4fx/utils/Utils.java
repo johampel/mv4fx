@@ -40,25 +40,27 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 
 /**
- * Collection of utiltity methods.
+ * Collection of utility methods.
  */
 public class Utils {
 
   /**
    * Ensures that {@code val} is between {@code min} and {@code max}.
    * <p>
-   * Basically, the method returns {@code min}, if {@code val} is less than {@code min}, {@code max} if {@code val} is greater than
-   * {@code max}, otherwise it returns {@code val}
+   * Basically, the method returns {@code min}, if {@code val} is less than {@code min}, {@code max}
+   * if {@code val} is greater than {@code max}, otherwise it returns {@code val}
    * <p>
-   * Note that this method deals only with positive values. Negative values are translated as follows: for {@code min} and {@code val} the
-   * negative value becomes 0 and for {@code max}  the biggest possible double value. This behaviour allows to pass negative value to
-   * {@code min} and {@code max} indicating that it is not defined.
+   * Note that this method deals only with positive values. Negative values are translated as
+   * follows: for {@code min} and {@code val} the negative value becomes 0 and for {@code max}  the
+   * biggest possible double value. This behaviour allows to pass negative value to {@code min} and
+   * {@code max} indicating that it is not defined.
    * <p>
-   * A final special rule applies, if {@code min} is larger than {@code max}. In this case {@code min} is set to {@code max}
+   * A final special rule applies, if {@code min} is larger than {@code max}. In this case
+   * {@code min} is set to {@code max}
    *
    * @param val The value
    * @param min The minimum allowed value, negative if no limit is specified
-   * @param max The maximum allowed value, negative, if no limit is specifed
+   * @param max The maximum allowed value, negative, if no limit is specified
    * @return Either {@code val} if it is between the limits, or one of the limits.
    */
   public static double ensureValueIsBetween(double val, double min, double max) {
@@ -115,7 +117,7 @@ public class Utils {
    */
   public static Side getOppositeSide(Side side) {
     if (side == null) {
-      return side;
+      return null;
     }
     return switch (side) {
       case TOP -> BOTTOM;
@@ -163,8 +165,9 @@ public class Utils {
   /**
    * Normalizes or closes the given {@link ViewGroupContainer}.
    * <p>
-   * This basically means the {@link ViewGroupContainer#normalize() normalize} is called for {@code container} itself. If {@code container}
-   * is empty (has no children) and it is the only child of a {@link ViewStage}, the stage is closed as well.
+   * This basically means the {@link ViewGroupContainer#normalize() normalize} is called for
+   * {@code container} itself. If {@code container} is empty (has no children) and it is the only
+   * child of a {@link ViewStage}, the stage is closed as well.
    *
    * @param container The {@link ViewGroupContainer} to normalize
    */
@@ -173,7 +176,8 @@ public class Utils {
       return;
     }
     container.normalize();
-    if (container.getLeftTop() == null && container.getRightBottom() == null && container.getParent() == null) {
+    if (container.getLeftTop() == null && container.getRightBottom() == null
+        && container.getParent() == null) {
       if (container.getScene().getWindow() instanceof ViewStage stage && stage.isAutoClose()) {
         stage.close();
       }
@@ -197,8 +201,8 @@ public class Utils {
   /**
    * Finds all nodes that match the given {@code predicate}.
    * <p>
-   * The method applies {@code predicate} to {@code start} and all direct and indirect children and returns those {@link Node Nodes} that
-   * match the {@code predicate}
+   * The method applies {@code predicate} to {@code start} and all direct and indirect children and
+   * returns those {@link Node Nodes} that match the {@code predicate}
    *
    * @param start     The start {@code Node}
    * @param predicate The {@link Predicate}

@@ -102,7 +102,7 @@ public interface DropTarget {
    * {@link DropTarget} for moving a {@link ViewOrGroup} to an existing {@link ViewGroup}.
    * <p>
    * If the {@code ViewOrGroup} is actually a {@code ViewGroup}, the {@link View Views} of the group are moved and the source
-   * {@code ViewGroup} is removed afterwards, if possible.
+   * {@code ViewGroup} is removed after wards, if possible.
    *
    * @param viewGroup The target  {@code ViewGroup}
    * @param index     The index where to insert the {@code ViewOrGroup}
@@ -136,7 +136,7 @@ public interface DropTarget {
   /**
    * A {@link DropTarget} to drop a {@link View} or {@link ViewGroup} to a new window.
    * <p>
-   * This is created, when the current drop position is outside of any existing window.
+   * This is created, when the current drop position is outside any existing window.
    *
    * @param screenPos The screen position
    */
@@ -176,7 +176,7 @@ public interface DropTarget {
   /**
    * A {@link DropTarget} representing that nothing is dropped.
    * <p>
-   * This is typically used in situation where the drag and drop opertion has no valid target.
+   * This is typically used in situation where the drag and drop operation has no valid target.
    */
   record None() implements DropTarget {
 
